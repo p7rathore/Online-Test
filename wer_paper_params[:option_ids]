@@ -1,0 +1,26 @@
+
+[1mFrom:[0m /home/user26/rails_studio/test/onlinetest/app/controllers/papers_controller.rb @ line 29 PapersController#submit:
+
+    [1;34m26[0m: [32mdef[0m [1;34msubmit[0m
+    [1;34m27[0m:   @user = current_user.id
+    [1;34m28[0m:   c=[1;34m0[0m
+ => [1;34m29[0m:   binding.pry
+    [1;34m30[0m:   answer_paper_params[[33m:option_ids[0m].each [32mdo[0m |option_id|
+    [1;34m31[0m: 
+    [1;34m32[0m:     @answer=[1;34;4mAnswer[0m.new
+    [1;34m33[0m:     @answer.user_id=@user
+    [1;34m34[0m:     @answer.question_id=answer_paper_params[[33m:question_id[0m]
+    [1;34m35[0m:     @answer.paper_id=answer_paper_params[[33m:paper_id[0m]
+    [1;34m36[0m:     @answer.option_id=option_id
+    [1;34m37[0m:    [32mif[0m !@answer.save
+    [1;34m38[0m:       c=[1;34m1[0m
+    [1;34m39[0m:     [32mend[0m
+    [1;34m40[0m:   [32mend[0m
+    [1;34m41[0m:   [32mif[0m c 
+    [1;34m42[0m:     redirect_to [31m[1;31m"[0m[31m#[1;31m"[0m[31m[0m, [35mnotice[0m:[31m[1;31m"[0m[31mNo[1;31m"[0m[31m[0m
+    [1;34m43[0m:   [32melse[0m
+    [1;34m44[0m:     redirect_to [31m[1;31m"[0m[31m#[1;31m"[0m[31m[0m, [35mnotice[0m:[31m[1;31m"[0m[31mok[1;31m"[0m[31m[0m
+    [1;34m45[0m:   [32mend[0m
+    [1;34m46[0m: 
+    [1;34m47[0m: [32mend[0m
+

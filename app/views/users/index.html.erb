@@ -1,0 +1,24 @@
+<%- model_class = User -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<div class="col-lg-offset-1 col-lg-10" >
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th><%= model_class.human_attribute_name(:name) %></th>
+        <th><%= model_class.human_attribute_name(:email) %></th>
+        <th><%= model_class.human_attribute_name(:admin) %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= link_to user.fname+" "+user.lname, user_path(user)%></td>
+          <td><%= link_to user.email, user_path(user) %></td>
+          <td><%= user.admin %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

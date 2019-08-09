@@ -1,0 +1,38 @@
+<div class="page-header">
+  <h1 align="center"><%=t '.title', :default => "Sign In"%></h1>
+</div>
+<br>
+<%= form_for(resource, as: resource_name, url: session_path(resource_name), :html => { :class => "form-horizontal user" }) do |f| %>
+  <div class="form-group">
+    <%= f.label :email, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :password, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.password_field :password, autocomplete: "current-password" , :class => 'form-control'%>
+    </div>
+  </div>
+
+  <% if devise_mapping.rememberable? %>
+    <div class="form-group">
+      <div class= "col-lg-offset-2 col-lg-10">
+      <%= f.check_box :remember_me%>
+      <%= f.label :remember_me%>
+    </div>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <%= f.submit "Sign in", :class => 'btn btn-primary' %>
+    </div>
+  </div>
+<% end %>
+<%= render "users/shared/links" %>
+
+
+

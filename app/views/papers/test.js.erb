@@ -1,0 +1,2 @@
+$('.question').html("<%= escape_javascript(render 'form_test', ans: @answer) %>");
+$('.questions_pagination').html("<%= escape_javascript(paginate @questions, params: {controller: 'papers', action: 'test'}) %>")

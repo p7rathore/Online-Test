@@ -1,0 +1,92 @@
+<%= nested_form_for @paper, :html => { :class => "form-horizontal paper" } do |f| %>
+
+  <% if @paper.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@paper.errors.count, "error") %> prohibited this paper from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @paper.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :Paper_Name, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :name, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:name) %>
+  </div>
+
+  <%= f.fields_for :questions do |question_form| %>
+    <div class="form-group">
+    
+      <b><%= question_form.label :Question,:class => 'control-label col-lg-2'%></b>
+    
+      <div class="col-lg-9">
+        <%= question_form.text_field :question, :class => 'form-control' %>
+      </div>
+      
+      <br><br><br>
+      <b><%= question_form.label :question_type,:class => 'control-label col-lg-2'%></b>
+   
+      <div class="col-lg-9">
+        <%= question_form.text_field :q_type,:class => 'form-control q_type' %>
+      </div>  
+
+      <br><br><br>
+      <b><%= question_form.label :Marks,:class => 'control-label col-lg-2'%></b>
+    
+      <div class="col-lg-9">
+        <%= question_form.number_field :marks, :class => 'form-control' %>
+      </div>
+      
+      <br><br><br>
+      <b><%= question_form.label :Duration,:class => 'control-label col-lg-2'%></b>
+   
+      <div class="col-lg-9">
+        <%= question_form.number_field :duration,:class => 'form-control' %>
+      </div>  
+      
+      <br><br><br>
+      <%= question_form.link_to_remove "Remove this question and question_type", :class => 'btn  btn-warning'   %>
+    </div>
+  
+    <br><br>
+
+    
+      <%= question_form.fields_for :options  do |option_form|%>
+      <div class="form-group">
+        <b><%= option_form.label :Option, :class => 'control-label col-lg-2'%></b>
+        
+        <div class="col-lg-5">
+          <%= option_form.text_field :option, :class => 'form-control' %>
+        </div>
+        
+        <%= option_form.check_box  :is_correct, class: 'check_box' %>&nbsp&nbsp
+        
+        
+        <%= option_form.link_to_remove "Remove this Option", :class => 'btn  btn-warning'%>
+      </div>
+     
+   
+    <%end%> 
+        
+  
+  <p><%= question_form.link_to_add "Add a Option", :options, :class => 'btn  btn-primary'%></p>
+<%end%>
+  <p><%= f.link_to_add "Add a question", :questions, :class => 'btn  btn-primary'%></p>  
+
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                papers_path, :class => 'btn btn-default' %>
+    </div>
+  </div>
+<% end %>

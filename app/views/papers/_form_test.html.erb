@@ -1,0 +1,38 @@
+<%= ans.question.question %><br>
+<%=form_for @answer,:url => {:controller => "papers", :action => "submit"},remote: true do |f|%>
+	<%=f.hidden_field :question_id %>
+	<%#= hidden_field_tag "page", @questions.current_page+1 %>
+	<%#=f.hidden_field :page, value: params[:page] %>
+	<% if @questions.first.q_type == "MAQ" %>	
+			 <% @questions.first.options.each do |option| %>
+			 <div class="form-group">
+	     		<%= check_box_tag "answer[option_ids][]", option.id, false, id:"answer_option_ids_#{option.id}" %>
+	     		<%= label_tag "answer[option_ids][]", option.option,:class=>"option" %>
+	     </div>
+	   <% end %>  
+	 <%else%>
+			<% @questions.first.options.each do |option| %>
+			<div class="form-group">
+	      <%= radio_button_tag "answer[option_ids][]", option.id, false %>
+	      <%= label_tag "answer[option_ids][]", option.option,:class=>"option"  %>
+	     </div>
+	   <% end %>  
+	<%end%>
+	<%user=@questions.first.answers.map { |a| a.user_id}%>
+	
+	<% if !user.include?(current_user.id) %>
+		<%=f.submit :submit,class: "submit"%>
+	<%end%>	
+<%end%>	
+	
+
+
+
+
+
+
+
+
+
+
+
