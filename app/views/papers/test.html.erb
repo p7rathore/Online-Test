@@ -1,11 +1,29 @@
-
-
-<div class= "question">
-	
-		<%= render 'form_test', ans: @answer%>
-	
-</div>	
-		
-<div style="display:none;">
-	<%= paginate @questions, class: "questions_pagination"%>
+<div class="panel-heading">
+	<%= @answer.question.question %><br>
 </div>
+<div class ="panel-body">
+	<%=form_for @answer,:url => {:controller => "papers", :action => "submit"},:remote => true do |f|%>
+		
+		<%=f.hidden_field :question_id %>	
+		<% if @answer.question.q_type == "MAQ" %>	
+			<% @answer.question.options.each do |option| %>
+				<div class="form-group">
+	     		<%= check_box_tag "answer[option_ids][]", option.id, false, id:"answeroption_option_ids_#{option.id}" %>
+	     		<%= f.label option.option,:class=>"option" %>
+		    </div>
+		  <% end %>  
+		<%else%>
+			<% @answer.question.options.shuffle.each do |option| %>
+				<div class="form-group">
+		      <%= radio_button_tag "answer[option_ids][]", option.id, false %>
+		    	<%= f.label option.option,:class=>"option"  %>
+		  	</div>
+		  <% end %>  
+		<%end%>
+			<%if @questions.count==1 %>
+				<%=f.submit "Final Submit"%><br>
+			<%else%>
+				<%=f.submit :submit%><br>
+			<%end%>
+	<%end%>	
+</div>	

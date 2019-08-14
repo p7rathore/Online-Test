@@ -1,8 +1,0 @@
-
-$('.question').html("<%= escape_javascript(render 'form_test', ans: @answer) %>");
-// $('.questions_pagination').html("<%= escape_javascript(paginate @questions, params: {controller: 'papers', action: 'test'}) %>")
-<%# if @questions.next_page || @questions.current_page == @page %>
-
-	$('.questions_pagination').replaceWith('<div style="display:none;"><%= j will_paginate(@questions) %></div>');
-<%# end %>
-

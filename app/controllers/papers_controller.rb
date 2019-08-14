@@ -16,16 +16,31 @@ class PapersController < ApplicationController
   end
 
   def test
-    @questions=@paper.questions.page(params[:page]).per_page(1)
-    @answer = Answer.new
-    @answer.question=@questions.first
+    @questions=(@paper.questions-current_user.answers.map{|answer| answer.question}).shuffle
+    if @questions.empty?
+      redirect_to submit_test_path(@paper)
+      return 
+    end
+    @answer = Answer.new(question_id:@questions.first.id)
   end
   
+  def submit
+    @answer = Answer.new(answer_params)
+    @answer.user_id = current_user.id
+    @answer.save
+    redirect_to test_path(@paper)
+  end
+
   def result
     @result=Result.where(user_id: current_user.id)
   end
 
   def submit_test
+    @result=Result.find_by(user_id: current_user.id, paper_id: params[:id])
+    if @result
+      redirect_to "#",notice: "your Test successfully done"
+      return
+    end
     @result=Result.new(user_id: current_user.id, paper_id: params[:id])
     @ans=Answer.where(user_id: current_user.id)
     @new_arr = @ans.select{|a| a.question.paper.id == params[:id].to_i}
@@ -41,15 +56,6 @@ class PapersController < ApplicationController
   def start_test
   end
   
-  def submit
-    @answer = Answer.new(answer_params)
-    @answer.user_id = current_user.id
-    @answer.save
-    @questions=@paper.questions.page(params[:page].to_i).per_page(1)
-    @answer = Answer.new
-    @answer.question=@questions.first
-    render 'submit.js.erb'
-  end
   # GET /papers/1new
   def new
     @paper = Paper.new

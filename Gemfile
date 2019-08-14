@@ -71,4 +71,4 @@ gem "nested_form"
 gem 'jquery-rails'
 gem 'jquery'
 # gem 'kaminari'
-gem 'will_paginate'
+# gem 'will_paginate'
