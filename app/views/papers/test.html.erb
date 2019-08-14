@@ -1,8 +1,11 @@
 
 
 <div class= "question">
-	<%= render 'form_test', ans: @answer%>
+	
+		<%= render 'form_test', ans: @answer%>
+	
 </div>	
 		
-
+<div style="display:none;">
 	<%= paginate @questions, class: "questions_pagination"%>
+</div>

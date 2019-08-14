@@ -1,13 +1,24 @@
 class Answer < ApplicationRecord
   belongs_to :user
-  belongs_to :paper
   belongs_to :question
-  belongs_to :option
+  has_one :paper, through: :question
 
-  validates :option_id, presence: true 
-  validates :question_id, presence: true
-  validates :user_id, presence: true 
-  validates :paper_id, presence: true
-	
+  has_many :answeroptions,dependent: :destroy
+  has_many :options, through: :answeroptions
+  accepts_nested_attributes_for :answeroptions,allow_destroy: true
+
+  def score
+		correct_options=question.correct.map(&:id)
+  	user_options=options.map(&:id)
+  	if correct_options.size==user_options.size
+  		if (user_options-correct_options).empty?
+  			return question.marks
+  		else
+  			return 0
+  		end
+		end
+		return 0
+	end
+
 
 end

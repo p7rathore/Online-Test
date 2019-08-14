@@ -10,18 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_09_081413) do
+ActiveRecord::Schema.define(version: 2019_08_13_103515) do
 
-  create_table "answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "paper_id"
-    t.bigint "question_id"
+  create_table "answeroptions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "answer_id"
     t.bigint "option_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "score", default: 0
-    t.index ["option_id"], name: "index_answers_on_option_id"
-    t.index ["paper_id"], name: "index_answers_on_paper_id"
+    t.index ["answer_id"], name: "index_answeroptions_on_answer_id"
+    t.index ["option_id"], name: "index_answeroptions_on_option_id"
+  end
+
+  create_table "answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "question_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["question_id"], name: "index_answers_on_question_id"
     t.index ["user_id"], name: "index_answers_on_user_id"
   end
@@ -52,6 +56,16 @@ ActiveRecord::Schema.define(version: 2019_08_09_081413) do
     t.index ["paper_id"], name: "index_questions_on_paper_id"
   end
 
+  create_table "results", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "paper_id"
+    t.integer "score", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["paper_id"], name: "index_results_on_paper_id"
+    t.index ["user_id"], name: "index_results_on_user_id"
+  end
+
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "fname"
     t.string "lname"
@@ -77,10 +91,12 @@ ActiveRecord::Schema.define(version: 2019_08_09_081413) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "answers", "options"
-  add_foreign_key "answers", "papers"
+  add_foreign_key "answeroptions", "answers"
+  add_foreign_key "answeroptions", "options"
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "users"
   add_foreign_key "options", "questions"
   add_foreign_key "questions", "papers"
+  add_foreign_key "results", "papers"
+  add_foreign_key "results", "users"
 end

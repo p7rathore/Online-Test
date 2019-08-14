@@ -1,11 +1,12 @@
 class PapersController < ApplicationController
-  before_action :set_paper, only: [:show, :edit, :update, :destroy, :start_test, :test, :submit]
-  before_action :require_admin, except: [:index, :show, :start_test, :test, :submit]
+  before_action :set_paper, only: [:show, :edit, :update, :destroy, :start_test, :test, :submit, :submit_test]
+  before_action :require_admin, except: [:index, :show, :start_test, :test, :submit, :result, :submit_test]
 
   # GET /papers
   # GET /papers.json
   def index
     @papers = Paper.all
+    @result = Result.all
   end
 
   # GET /papers/1
@@ -16,39 +17,40 @@ class PapersController < ApplicationController
 
   def test
     @questions=@paper.questions.page(params[:page]).per_page(1)
-    @answer = @questions.first.answers.new
-    
+    @answer = Answer.new
+    @answer.question=@questions.first
+  end
+  
+  def result
+    @result=Result.where(user_id: current_user.id)
   end
 
-
-  def start_test
-
-  end
-  def submit
-    @user = current_user.id
-    answer_paper_params[:option_ids].each do |option_id|
-      @answer=Answer.new
-      @answer.user_id=@user
-      @answer.question_id=answer_paper_params[:question_id]
-      @answer.option_id=option_id
-      @answer.paper_id=params[:id]
-      
-        @answer.save 
-      ans=Answer.last
-      
-
-      if ans.option.is_correct
-        ans.score = ans.question.marks 
-        ans.save
-      end    
+  def submit_test
+    @result=Result.new(user_id: current_user.id, paper_id: params[:id])
+    @ans=Answer.where(user_id: current_user.id)
+    @new_arr = @ans.select{|a| a.question.paper.id == params[:id].to_i}
+    @new_arr.each do |b|
+      @result.score += b.score
+    end   
+    if @result.save
+        redirect_to "#",notice: "your Test successfully done"
     end
 
-    # @page = params[:answer][:page].to_i + 1
-    # @questions=@paper.questions.page(@page).per_page(1)
-    # binding.pry
-    # @answer = @questions.first.answers.new if @questions.present?
   end
-  # GET /papers/new
+  
+  def start_test
+  end
+  
+  def submit
+    @answer = Answer.new(answer_params)
+    @answer.user_id = current_user.id
+    @answer.save
+    @questions=@paper.questions.page(params[:page].to_i).per_page(1)
+    @answer = Answer.new
+    @answer.question=@questions.first
+    render 'submit.js.erb'
+  end
+  # GET /papers/1new
   def new
     @paper = Paper.new
   end
@@ -108,11 +110,16 @@ class PapersController < ApplicationController
       # params.require(:paper).permit(:name)
       params.require(:paper).permit(:name, questions_attributes: [:id, :question, :q_type, :marks, :duration,  :_destroy, options_attributes:[:id, :option, :is_correct, :_destroy]])
     end
-    def answer_paper_params
-      # params.require(:paper).permit(:name)
-      params.require(:answer).permit(:user_id, :paper_id, :question_id, :option_ids=>[])
+
+    def answer_params
+      params.require(:answer).permit(:question_id, :option_ids=>[] )
+      
     end
 
+    # def result_params
+    #   params.permit(:id)
+    # end
+    
     def require_admin
       unless current_user.admin
         redirect_to root_path, notice: 'You are not admin!'

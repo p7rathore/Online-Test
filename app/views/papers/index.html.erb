@@ -29,8 +29,13 @@
                       :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
                       :class => 'btn btn-xs btn-danger' %>
           <%end%>   
-          <% if !current_user.admin %>            
-          <%= link_to 'Start Test',start_test_path(paper), :class => 'btn btn-default btn-xs' %>            
+          <% if !current_user.admin %>
+            <% if @result.select{|a| a.user_id == current_user.id} == [] %>           
+              <%= link_to 'Start Test',start_test_path(paper), :class => 'btn btn-default btn-xs' %>
+            <%else%>
+              <%= link_to 'Show Result',result_path(paper), :class => 'btn btn-primary btn-xs' %>
+            <%end%>              
+            
           <%end%>
 
         </td>

@@ -1,0 +1,8 @@
+<h2>Result</h2>
+<ul>
+	<%@result.each do |res|%>
+		<li><b>Name:</b><%=res.user.fname%> <%=res.user.lname%><br></li>
+		<li><b>Paper:</b><%=res.paper.name%><br></li>
+		<li><b>Total Score:</b><%=res.score%><br></li>
+	<%end%>
+</ul>
