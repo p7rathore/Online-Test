@@ -1,8 +1,11 @@
 <div class="panel-heading">
+<div class="pull-right">	
+	<h1 class='timer' data-seconds-left = <%= @answer.question.duration/60%> ></h1>
+</div>
 	<%= @answer.question.question %><br>
 </div>
 <div class ="panel-body">
-	<%=form_for @answer,:url => {:controller => "papers", :action => "submit"},:remote => true do |f|%>
+	<%=form_for @answer,:url => {:controller => "papers", :action => "submit"} do |f|%>
 		
 		<%=f.hidden_field :question_id %>	
 		<% if @answer.question.q_type == "MAQ" %>	
@@ -21,9 +24,10 @@
 		  <% end %>  
 		<%end%>
 			<%if @questions.count==1 %>
-				<%=f.submit "Final Submit"%><br>
+				<%=f.submit "Final Submit",class: "submit"%><br>
 			<%else%>
-				<%=f.submit :submit%><br>
+				<%=f.submit :submit, class: "submit"%><br>
 			<%end%>
 	<%end%>	
 </div>	
+

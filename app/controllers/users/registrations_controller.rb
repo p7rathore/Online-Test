@@ -2,7 +2,7 @@
 
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
-  # before_action :configure_account_update_params, only: [:update]
+  before_action :configure_account_update_params, only: [:update]
 
   # # GET /resource/sign_up
   # def new
@@ -19,9 +19,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # # PUT /resource
+  # # # PUT /resource
   # def update
-  #   super
+  #   @user = current_user
+ 
+  #   if @user.update(configure_account_update_params)
+  #     redirect_to  user_path(@user),notice: "profile successfully updated"
+  #   else
+  #     redirect_to  user_path(@user),notice: "profile not updated"
+  #   end
   # end
 
   # # DELETE /resource
@@ -42,13 +48,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:fname,:lname])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:fname,:lname,:email])
   end
 
   # # If you have extra params to permit, append them to the sanitizer.
-  # def configure_account_update_params
-  #   devise_parameter_sanitizer.permit(:account_update, keys: [:attribute])
-  # end
+  def configure_account_update_params
+    devise_parameter_sanitizer.permit(:account_update, keys: [:fname,:lname,:email])
+  end
 
   # # The path used after sign up.
   # def after_sign_up_path_for(resource)

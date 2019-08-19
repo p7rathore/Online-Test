@@ -61,20 +61,19 @@
 
     
       <%= question_form.fields_for :options  do |option_form|%>
-      <div class="form-group">
-        <b><%= option_form.label :Option, :class => 'control-label col-lg-2'%></b>
-        
-        <div class="col-lg-5">
-          <%= option_form.text_field :option, :class => 'form-control' %>
+        <div class="form-group" , style="margin-left: 150px;">
+          
+          <div class="col-lg-5" >
+            <div class="col-lg-2 control-label">
+              <%= option_form.check_box  :is_correct, class: 'check_box' %> 
+            </div>
+            <div class="col-lg-10">
+              <%= option_form.text_field :option, :class => 'form-control'%>
+            </div>
+          </div>
+         
+         <%= option_form.link_to_remove "Remove this Option", :class => 'btn  btn-warning control-label'%>
         </div>
-        
-        <%= option_form.check_box  :is_correct, class: 'check_box' %>&nbsp&nbsp
-        
-        
-        <%= option_form.link_to_remove "Remove this Option", :class => 'btn  btn-warning'%>
-      </div>
-     
-   
     <%end%> 
         
   

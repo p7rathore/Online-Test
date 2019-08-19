@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   get "papers/question/:id" => "papers#start_test", as: :start_test
   get "papers/ques/:id" => "papers#test", as: :test
-  get "papers/:id" => "papers#submit_test", as: :submit_test
+  get "papers/submit_test/:id" => "papers#submit_test", as: :submit_test
   get "paper/:id" => "papers#result", as: :result
   post "papers/ques/:id" => "papers#submit"
   root "papers#index" 

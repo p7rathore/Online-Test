@@ -12,11 +12,17 @@ class PapersController < ApplicationController
   # GET /papers/1
   # GET /papers/1.json
   def show
+
     @questions = @paper.questions
+  end
+
+  def start_test
+  
   end
 
   def test
     @questions=(@paper.questions-current_user.answers.map{|answer| answer.question}).shuffle
+    
     if @questions.empty?
       redirect_to submit_test_path(@paper)
       return 
@@ -31,11 +37,8 @@ class PapersController < ApplicationController
     redirect_to test_path(@paper)
   end
 
-  def result
-    @result=Result.where(user_id: current_user.id)
-  end
-
   def submit_test
+    
     @result=Result.find_by(user_id: current_user.id, paper_id: params[:id])
     if @result
       redirect_to "#",notice: "your Test successfully done"
@@ -52,9 +55,12 @@ class PapersController < ApplicationController
     end
 
   end
-  
-  def start_test
+
+  def result
+    @result=Result.where(user_id: current_user.id)
   end
+
+  
   
   # GET /papers/1new
   def new
