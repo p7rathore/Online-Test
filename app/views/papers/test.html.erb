@@ -1,6 +1,6 @@
 <div class="panel-heading">
 <div class="pull-right">	
-	<h1 class='timer' data-seconds-left = <%= @answer.question.duration/60%> ></h1>
+	<h1 class='timer' data-minutes-left = <%= @answer.question.duration/60%> ></h1>
 </div>
 	<%= @answer.question.question %><br>
 </div>
@@ -30,4 +30,11 @@
 			<%end%>
 	<%end%>	
 </div>	
+<script type="text/javascript">
+		$('.timer').startTimer({
+		 	onComplete: function(element){
+	 			$(".submit").click();
+			}
+		})
+</script>
 

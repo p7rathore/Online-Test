@@ -5,7 +5,7 @@ class Answer < ApplicationRecord
 
   has_many :answeroptions,dependent: :destroy
   has_many :options, through: :answeroptions
-  accepts_nested_attributes_for :answeroptions,allow_destroy: true
+  
 
   def score
 		correct_options=question.correct.map(&:id)
@@ -19,6 +19,4 @@ class Answer < ApplicationRecord
 		end
 		return 0
 	end
-
-
 end
