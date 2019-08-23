@@ -1,0 +1,23 @@
+<h1>Users</h1>
+<hr>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th><b>Name</b></th>
+			<th><b>Results</b></th>
+		</tr>
+	</thead>
+	<tbody>
+		<%@users.each do |user| %>
+
+			<tr>
+				<td><%=user.fname.capitalize%> <%=user.lname.capitalize%></td>
+
+				<td><%= link_to 'Show Result',user_result_path(user.id), :class => 'btn btn-primary btn-xs' %></td>
+			</tr>
+		<%end%>
+	</tbody>
+</table>			
+
+
+	

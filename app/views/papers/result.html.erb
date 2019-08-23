@@ -1,9 +1,8 @@
 <h2>Result</h2>
 <ul>
-	<%@result.each do |res|%>
-		<li><b>Name:</b><%=res.user.fname%> <%=res.user.lname%><br></li>
-		<li><b>Paper:</b><%=res.paper.name%><br></li>
-		<li><b>Total Score:</b><%=res.score%><br></li>
-	<%end%>
+	<% @res  = @result.select{|a|  a.paper_id == @paper.id}.first %>
+		<li><b>Name:</b><%=@res.user.fname%> <%=@res.user.lname%><br></li>
+		<li><b>Paper:</b><%=@res.paper.name%><br></li>
+		<li><b>Total Score:</b><%=@res.score%><br></li>
 </ul>
-<%=link_to "Back",papers_path,:class => 'btn btn-default btn-sm-7'%>
+<%=link_to "Back",root_path,:class => 'btn btn-default btn-sm-7'%>

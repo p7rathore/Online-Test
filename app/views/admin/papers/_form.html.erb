@@ -1,4 +1,4 @@
-<%= nested_form_for @paper, :html => { :class => "form-horizontal paper" } do |f| %>
+<%= nested_form_for [:admin, @paper], :html => { :class => "form-horizontal paper" } do |f| %>
 
   <% if @paper.errors.any? %>
     <div id="error_expl" class="panel panel-danger">
@@ -85,7 +85,7 @@
     <div class="col-lg-offset-2 col-lg-10">
       <%= f.submit nil, :class => 'btn btn-primary' %>
       <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                papers_path, :class => 'btn btn-default' %>
+                admin_papers_path, :class => 'btn btn-default' %>
     </div>
   </div>
 <% end %>

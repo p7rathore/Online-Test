@@ -1,0 +1,27 @@
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Paper</th>
+			<th>Marks</th>
+			<th>Passing Marks</th>
+			<th>Status</th>
+		</tr>	
+	</thead>
+	<tbody>
+		<%@result.each do |result|%>
+			<tr>
+				<td><%=result.user.fname%> <%=result.user.lname%></td>
+				<td><%=result.paper.name%></td>
+				<td><%=result.score%>/<%=result.paper.marks%></td>
+				<td><%=result.paper.marks/2%>/<%=result.paper.marks%></td>
+				<%if result.score < result.paper.marks/2%>
+					<td><b>Fail (<%=(result.score*100)/result.paper.marks%>)%</b></td>
+				<%else%>
+					<td><b>Pass (<%=(result.score*100)/result.paper.marks%>)%</b></td>
+				<%end%>	
+			</tr>
+		<%end%>	
+	</tbody>
+</table>	
+<%=link_to "Back",users_path,:class => 'btn btn-default btn-sm-7'%>
