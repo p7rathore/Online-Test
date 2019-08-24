@@ -1,12 +1,11 @@
 class PapersController < ApplicationController
-  before_action :set_paper, only: [:start_test, :test, :submit, :submit_test,:result]
-  # before_action :require_admin, except: [:start_test, :test, :submit, :result, :submit_test]
+  before_action :set_paper, only: [:show, :test, :submit, :submit_test,:result]
   def index
    @papers = Paper.all
    @results = Result.all
   end
  
-  def start_test 
+  def show 
   
   end
 
@@ -64,12 +63,4 @@ class PapersController < ApplicationController
     def result_params
       params.permit(:id)
     end
-    
-    # def require_admin
-
-    #   unless current_user.admin
-    #     redirect_to root_path, notice: 'You are not admin!'
-    #   end
-    # end
-
 end 

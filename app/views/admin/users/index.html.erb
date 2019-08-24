@@ -1,0 +1,27 @@
+<h1>Users</h1>
+<hr>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th><b>Name</b></th>
+			<th><b>Actions</b></th>
+		</tr>
+	</thead>
+	<tbody>
+		<%@users.each do |user| %>
+
+			<tr>
+				<td><%=user.fname.capitalize+" "+user.lname.capitalize%></td>
+				<%if user.results != []%>
+					<td><%= link_to 'Show Result',result_admin_user_path(user.id), :class => 'btn btn-primary btn-xs' %></td>
+				<%else%>
+					<td><%= button_to 'Show Result',{}, :disabled => true, :class => 'btn btn-xs btn-primary' %></td>
+				<%end%>
+			</tr>
+		<%end%>
+	</tbody>
+</table>			
+<%=link_to "Back",root_path,:class => 'btn btn-default btn-sm-7'%>
+
+
+	

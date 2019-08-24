@@ -1,6 +1,6 @@
   <%- model_class = Paper -%>
   <div class="page-header">
-    <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+    <h1><%=pluralize(@papers.count,'Paper')%></h1>
   </div>
   <table class="table table-striped">
     <thead>
@@ -20,7 +20,7 @@
           <td>
           <% if current_user.admin %>
             <%= link_to t('.show', :default => t("helpers.links.show")),
-                        show_path(paper), :class => 'btn btn-default btn-xs' %>
+                        admin_paper_path(paper), :class => 'btn btn-default btn-xs' %>
                         
               <%= link_to t('.edit', :default => t("helpers.links.edit")),
                         edit_admin_paper_path(paper), :class => 'btn btn-default btn-xs' %>

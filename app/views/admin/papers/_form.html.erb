@@ -36,7 +36,7 @@
       <b><%= question_form.label :question_type,:class => 'control-label col-lg-2'%></b>
    
       <div class="col-lg-9">
-        <%= question_form.text_field :q_type,:class => 'form-control q_type' %>
+        <%= question_form.select :q_type,["MCQ","MAQ","TF"],:class => 'form-select q_type' %>
       </div>  
 
       <br><br><br>
@@ -47,11 +47,17 @@
       </div>
       
       <br><br><br>
-      <b><%= question_form.label :Duration,:class => 'control-label col-lg-2'%></b>
-   
-      <div class="col-lg-9">
-        <%= question_form.number_field :duration,:class => 'form-control' %>
+      <b><%= question_form.label "Duration(HH/MM/SS)",:class => 'control-label col-lg-2'%></b>
+    
+      <div class="col-lg-1">
+        <%= question_form.number_field :hours,:class => 'form-control' %>
       </div>  
+      <div class="col-lg-1">
+        <%= question_form.number_field :minutes,:class => 'form-control' %>
+      </div> 
+      <div class="col-lg-1">
+        <%= question_form.number_field :seconds,:class => 'form-control' %>
+      </div> 
       
       <br><br><br>
       <%= question_form.link_to_remove "Remove this question and question_type", :class => 'btn  btn-warning'   %>
