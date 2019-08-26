@@ -19,9 +19,9 @@
         <td><%#=l paper.created_at %></td>
         <td>
             <% if @results.select{|a| a.user_id == current_user.id and a.paper_id == paper.id} == []  %>           
-              <%= link_to 'Start Test',start_test_path(paper), :class => 'btn btn-default btn-xs' %>
+              <%= link_to 'Start Test',start_paper_path(paper), :class => 'btn btn-default btn-xs' %>
             <%else%>
-              <%= link_to 'Show Result',result_path(paper), :class => 'btn btn-primary btn-xs' %>
+              <%= link_to 'Show Result',result_paper_path(paper), :class => 'btn btn-primary btn-xs' %>
             <%end%>              
         </td>
       </tr>

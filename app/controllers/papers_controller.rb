@@ -11,9 +11,9 @@ class PapersController < ApplicationController
 
   def test
     @questions=(@paper.questions-current_user.answers.map{|answer| answer.question}).shuffle
-    
+    @count=(@paper.questions.count-@questions.count)+1
     if @questions.empty?
-      redirect_to submit_test_path(@paper)
+      redirect_to submit_test_paper_path(@paper)
       return 
     end
     @answer = Answer.new(question_id:@questions.first.id)
@@ -23,14 +23,14 @@ class PapersController < ApplicationController
     @answer = Answer.new(answer_params)
     @answer.user_id = current_user.id
     @answer.save
-    redirect_to test_path(@paper)
+    redirect_to test_paper_path(@paper)
   end
 
   def submit_test
     
     @result=Result.find_by(user_id: current_user.id, paper_id: params[:id])
     if @result
-      redirect_to result_path(@paper),notice: "your Test successfully done"
+      redirect_to result_paper_path(@paper),notice: "your Test successfully done"
       return
     end
     @result=Result.new(user_id: current_user.id, paper_id: params[:id])
@@ -40,7 +40,7 @@ class PapersController < ApplicationController
       @result.score += b.score
     end   
     if @result.save
-        redirect_to result_path(@paper),notice: "your Test successfully done"
+        redirect_to result_paper_path(@paper),notice: "your Test successfully done"
     end
 
   end

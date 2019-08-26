@@ -34,9 +34,9 @@
       
       <br><br><br>
       <b><%= question_form.label :question_type,:class => 'control-label col-lg-2'%></b>
-   
+     
       <div class="col-lg-9">
-        <%= question_form.select :q_type,["MCQ","MAQ","TF"],:class => 'form-select q_type' %>
+        <%= question_form.select :q_type,["MCQ","MAQ","True/False"],{},:class => 'q_type form-select' %>
       </div>  
 
       <br><br><br>
@@ -50,7 +50,7 @@
       <b><%= question_form.label "Duration(HH/MM/SS)",:class => 'control-label col-lg-2'%></b>
     
       <div class="col-lg-1">
-        <%= question_form.number_field :hours,:class => 'form-control' %>
+          <%= question_form.number_field :hours,:class => 'form-control' %>
       </div>  
       <div class="col-lg-1">
         <%= question_form.number_field :minutes,:class => 'form-control' %>

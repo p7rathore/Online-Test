@@ -1,19 +1,20 @@
 <div class="panel-heading">
 <div class="pull-right">	
-	<h1 class='timer' data-minutes-left = <%= @answer.question.duration/60%> ></h1>
+	<h1 class='timer' data-minutes-left = <%= @answer.question.duration/60%>></h1>
 </div>
+	<%= @count %>)
 	<%= @answer.question.question %><br>
 </div>
 <div class ="panel-body">
-	<%=form_for @answer,:url => {:controller => "papers", :action => "submit"} do |f|%>
+	<%=form_for @answer,remote: true,:url => {:controller => "papers", :action => "submit"} do |f|%>
 		<%=f.hidden_field :question_id %>
 		<%ch=("a".ord-1).chr%>
 			<% @answer.question.options.shuffle.each do |option| %>
 				<div class="form-group">
 				<% if @answer.question.q_type == "MAQ" %>
-		      <%= radio_button_tag "answer[option_ids][]", option.id, false %>
+		      <%= check_box_tag "answer[option_ids][]", option.id, false, id:"answeroption_option_ids_#{option.id}" %>
 		    <%else%>
-		     	<%= check_box_tag "answer[option_ids][]", option.id, false, id:"answeroption_option_ids_#{option.id}" %>
+		    	<%= radio_button_tag "answer[option_ids][]", option.id, false %>
 		    <%end%>
 		    	<%=f.label (ch=ch.next)+")",:class=>"option"%>
 		    	<%= f.label option.option,:class=>"option"  %>

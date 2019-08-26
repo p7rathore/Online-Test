@@ -16,15 +16,19 @@ Rails.application.routes.draw do
     end
   end
   authenticated :user, ->(u) { !u.admin } do #user
-    root "papers#index"
-    resources :papers, except:[:show]
-    resources :users, only:[:show]
-    get "papers/:id/instructions" => "papers#show", as: :start_test
-    get "papers/:id" => "papers#test", as: :test
-    get "papers/:id/submit_test" => "papers#submit_test", as: :submit_test
-    get "paper/:id/Result" => "papers#result", as: :result
-    post "papers/ques/:id" => "papers#submit"
-  end  
+      root "papers#index"
+      resources :papers, except:[:show] do
+        member do
+          get "instructions" => "papers#show", as: :start
+          get "/" => "papers#test", as: :test
+          get "submit_test" => "papers#submit_test", as: :submit_test
+          get "Result" => "papers#result", as: :result
+          post "/" => "papers#submit"
+        end  
+      
+    end
+    resources :users, only:[:show]  
+  end
   root "papers#index"
   get "/*args"=>"users#undef"
 end
