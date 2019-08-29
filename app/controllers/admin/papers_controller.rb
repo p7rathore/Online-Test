@@ -3,7 +3,7 @@ class Admin::PapersController < ApplicationController
 
   def index
    @papers = Paper.all
-   @results = Result.all
+   # @results = Result.all
   end
   
   def new

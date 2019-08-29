@@ -9,8 +9,14 @@
 	</dl>
 	<dl class="dl-horizontal">
 		<dt><h5><b><%=pluralize(@questions.count,'Question')%>:</b></h5></dt><br>
+		
 		<%@questions.each_with_index do |ques,index|%>
-			<dd><%=index+1%>)<%=ques.question%></dd>
+			<dd><%=index+1%>)<%=ques.question%><br></dd>
+			<%ch=("a".ord-1).chr%>	
+			<%ques.options.each do |option| %>
+				<dd>&nbsp&nbsp&nbsp&nbsp<%=ch=ch.next%>)<%=option.option%><br></dd>
+			<%end%>
+		<hr>
 		<%end%>
 	</dl>
 

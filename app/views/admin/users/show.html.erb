@@ -8,17 +8,38 @@
   <dd><%= @user.fname+" "+@user.lname %></dd>
   <dt><strong><%= model_class.human_attribute_name(:email) %>:</strong></dt>
   <dd><%= @user.email %></dd>
-  <%if current_user.admin%>
-    <dt><strong><%#= model_class.human_attribute_name(:current_sign_in_at) %></strong></dt>
-    <dd><%#= @user.current_sign_in_at %></dd>
-    <dt><strong><%#= model_class.human_attribute_name(:last_sign_in_at) %></strong></dt>
-    <dd><%#= @user.last_sign_in_at %></dd>
-    <dt><strong><%#= model_class.human_attribute_name(:current_sign_in_ip) %></strong></dt>
-    <dd><%#= @user.current_sign_in_ip %></dd>
-    <dt><strong><%#= model_class.human_attribute_name(:last_sign_in_ip) %></strong></dt>
-    <dd><%#= @user.last_sign_in_ip %></dd>
-  <%end%>
 </dl>
+<%if @user.results !=[]%>
+  <hr>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Paper</th>
+        <th>Marks</th>
+        <th>Passing Marks</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr> 
+    </thead>
+    <tbody>
+      <%@result.each do |result|%>
+        <tr>
+          <td><%=link_to result.paper.name,[:admin,result.paper]%></td>
+          <td><%=result.score%>/<%=result.paper.marks%></td>
+          <td><%=result.paper.marks/2%>/<%=result.paper.marks%></td>
+          <%if result.score < result.paper.marks/2%>
+            <td><b>Fail (<%=(result.score*100)/result.paper.marks%>)%</b></td>
+          <%else%>
+            <td><b>Pass (<%=(result.score*100)/result.paper.marks%>)%</b></td>
+          <%end%> 
+          <td><%=link_to "detail",result_admin_user_path(result)%></td>
+        </tr>
+      <%end%> 
+    </tbody>
+  </table>  
+<%end%>
+<%=link_to "Back",:back,:class => 'btn btn-default btn-sm-7'%>
 
-<%=link_to "Back",root_path,:class => 'btn btn-default btn-sm-7'%>
+  
+
 

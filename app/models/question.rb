@@ -3,6 +3,10 @@ class Question < ApplicationRecord
 	has_many :options,dependent: :destroy
 	has_many :answers,dependent: :destroy
   accepts_nested_attributes_for :options,allow_destroy: true
+
+  def user_answer(user_id)
+   	answers.find_by(user_id:user_id)
+  end
   
   def correct
   	options.where(is_correct: true)

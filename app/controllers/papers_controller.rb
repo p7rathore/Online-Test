@@ -10,6 +10,7 @@ class PapersController < ApplicationController
   end
 
   def test
+    
     @questions=(@paper.questions-current_user.answers.map{|answer| answer.question}).shuffle
     @count=(@paper.questions.count-@questions.count)+1
     if @questions.empty?

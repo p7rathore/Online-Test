@@ -1,15 +1,16 @@
 class Admin::UsersController < ApplicationController
-  before_action :set_user, only: [:show,:result]
+  before_action :set_user, only: [:show]
 
   def index
     @users = User.all
   end
 
   def result
-    @result=@user.results
+    @result=Result.find(params[:id])
   end
   
   def show
+    @result=@user.results
   end
   
   private

@@ -1,29 +1,42 @@
 <center><h1><b>Result</b></h1></center>
+<ul>
+		<li><b>Paper:</b><%=@result.paper.name%><br></li>
+		<li><b>Total Score:</b><%=@result.score%><br></li>
+</ul>
 <hr>
-<h2><b><%=@result.first.user.fname.capitalize+" "+@result.first.user.lname.capitalize%></b></h2>
-<hr>
-<table class="table table-striped">
-	<thead>
-		<tr>
-			<th>Paper</th>
-			<th>Marks</th>
-			<th>Passing Marks</th>
-			<th>Status</th>
-		</tr>	
-	</thead>
-	<tbody>
-		<%@result.each do |result|%>
-			<tr>
-				<td><%=result.paper.name%></td>
-				<td><%=result.score%>/<%=result.paper.marks%></td>
-				<td><%=result.paper.marks/2%>/<%=result.paper.marks%></td>
-				<%if result.score < result.paper.marks/2%>
-					<td><b>Fail (<%=(result.score*100)/result.paper.marks%>)%</b></td>
-				<%else%>
-					<td><b>Pass (<%=(result.score*100)/result.paper.marks%>)%</b></td>
-				<%end%>	
-			</tr>
-		<%end%>	
-	</tbody>
-</table>	
-<%=link_to "Back",admin_users_path,:class => 'btn btn-default btn-sm-7'%>
+<%@result.paper.questions.each_with_index do |question,index| %>
+	<%=index+1%>)<%=question.question%><br>
+		<%ch=("a".ord-1).chr%>
+		<%question.options.each do |option| %>
+			<%if option.is_correct%>
+				<div class="alert-success">
+					&nbsp&nbsp&nbsp<%=ch=ch.next%>)<%=option.option%>
+					</div>
+				<%else%>	
+				<div>
+					&nbsp&nbsp&nbsp<%=ch=ch.next%>)<%=option.option%>
+				</div>	
+			<%end%>	
+		  
+		  <br>
+
+		<%end%>
+			<%ans=question.user_answer(@result.user_id)%>
+			User Answer:
+			<%if ans.options.blank? %>
+				<div class="alert-info">
+					Not-attempted
+				</div>
+			<%elsif ans.is_correct? %>
+				<div class="alert-success">
+			<%else%>
+				<div class="alert-danger">
+			<%end%>	
+				<%ans.options.each do |option|%>
+					<%=option.option%>
+			<%end%>	
+			</div>		
+		<hr>
+
+<%end%>		
+<%=link_to "Back",:back,:class => 'btn btn-default'%>

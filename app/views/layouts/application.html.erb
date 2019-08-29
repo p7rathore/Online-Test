@@ -11,8 +11,9 @@
 
     <%= javascript_include_tag "application" %>
   </head>
-  <body>
-
+  <body>  
+ 
+  <%if action_name != "test"%>
     <div class="navbar navbar-default navbar-static-top">
       <div class="container">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
@@ -41,6 +42,7 @@
         </div>
       </div>
     </div>
+  <%end%>  
 
     <div class="container">
       <div class="row">

@@ -6,17 +6,18 @@ class Answer < ApplicationRecord
   has_many :answeroptions,dependent: :destroy
   has_many :options, through: :answeroptions
   
-
+  def is_correct?
+    correct_options=question.correct.map(&:id)
+    user_options=options.map(&:id)
+    correct_options.size==user_options.size and (user_options-correct_options).empty?
+  end
+  
   def score
-		correct_options=question.correct.map(&:id)
-  	user_options=options.map(&:id)
-  	if correct_options.size==user_options.size
-  		if (user_options-correct_options).empty?
-  			return question.marks
-  		else
-  			return 0
-  		end
-		end
-		return 0
+		if is_correct?
+  		return question.marks
+  	end
+  0
 	end
+
+
 end
